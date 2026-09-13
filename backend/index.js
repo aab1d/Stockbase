@@ -3,6 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
+import productRoute from "./routes/productRoute.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import notFound from "./middlewares/notFound.js";
 const PORT = process.env.PORT;
@@ -23,6 +24,8 @@ app.use(
 );
 
 app.use("/auth", authRoute);
+app.use("/product", productRoute);
+
 app.use(notFound);
 app.use(errorHandler);
 connectDB().then(() => {

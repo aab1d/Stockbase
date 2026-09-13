@@ -8,7 +8,7 @@ export const registerUser = async (req, res) => {
   const { username, role, password } = req.body;
   try {
     const hashed = await bcrypt.hash(password, 10);
-    const user = await User.create({ username, role, password: hashed });
+    await User.create({ username, role: "user", password: hashed });
     res.status(201).json({ message: "User created!" });
   } catch (err) {
     console.log(err);
@@ -29,7 +29,11 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
       expiresIn: "1hr",
     });
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: { id: user._id, username: user.username, role: user.role },
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Login failed!" });
