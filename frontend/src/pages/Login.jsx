@@ -68,6 +68,7 @@ const Login = () => {
 
         <button
           type="submit"
+          disabled={loading}
           className="mt-2 rounded-md bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700 transition-colors cursor-pointer"
         >
           Log in
