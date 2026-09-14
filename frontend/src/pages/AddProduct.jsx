@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addProduct } from "../api/product.js";
-import { useAuth } from "../context/useAuth.js";
-import Spinner from "../components/Spinner.jsx";
+import { addProduct } from "../api/product";
+import { useAuth } from "../context/useAuth";
+import Spinner from "../components/Spinner";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({

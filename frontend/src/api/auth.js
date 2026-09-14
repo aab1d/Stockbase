@@ -13,7 +13,7 @@ export async function loginUser(username, password) {
   return data;
 }
 
-export async function registerUser(username, role, password) {
+export async function registerUser(username, password) {
   const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteProduct, getProduct, updateStock } from "../api/product.js";
+import { deleteProduct, getProduct, updateStock } from "../api/product";
 import { useAuth } from "../context/useAuth.js";
-import RoleGuard from "../components/RoleGuard.jsx";
-import Spinner from "../components/Spinner.jsx";
+import RoleGuard from "../components/RoleGuard";
+import Spinner from "../components/Spinner";
 
 const ProductDetail = () => {
   const { id } = useParams();

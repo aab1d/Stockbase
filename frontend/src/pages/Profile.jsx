@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
 import Spinner from "../components/Spinner.jsx";
-import ScrambleText from "../components/ScrambleText.jsx";
+import ScrambleText from "../components/ScrambleText";
 
 const Profile = () => {
   const { user, logout } = useAuth();

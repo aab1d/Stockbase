@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getAllProducts, searchProducts } from "../api/product.js";
-import { useAuth } from "../context/useAuth.js";
-import RoleGuard from "../components/RoleGuard.jsx";
-import Spinner from "../components/Spinner.jsx";
+import { getAllProducts, searchProducts } from "../api/product";
+import { useAuth } from "../context/useAuth";
+import RoleGuard from "../components/RoleGuard";
+import Spinner from "../components/Spinner";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);

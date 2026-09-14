@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { loginUser } from "../api/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/useAuth.js";
-import Spinner from "../components/Spinner.jsx";
-import PasswordInput from "../components/PasswordInput.jsx";
+import { useAuth } from "../context/useAuth";
+import Spinner from "../components/Spinner";
+import PasswordInput from "../components/PasswordInput";
 
 const Login = () => {
   const [username, setUsername] = useState("");
