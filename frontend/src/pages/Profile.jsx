@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
+import Spinner from "../components/Spinner.jsx";
+import ScrambleText from "../components/ScrambleText.jsx";
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -10,7 +12,7 @@ const Profile = () => {
     navigate("/login");
   };
 
-  if (!user) return <p>Loading...</p>;
+  if (!user) return <Spinner />;
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 gap-4">
       <div className="flex flex-col gap-4 bg-white border border-gray-200 rounded-lg p-8 w-full max-w-sm">
@@ -22,7 +24,11 @@ const Profile = () => {
         <div className="flex flex-col gap-4 text-sm">
           <div className="flex justify-between">
             <span className="text-gray-500">User ID</span>
-            <span className="text-gray-900">{user._id}</span>
+            <ScrambleText
+              key={user._id}
+              text={user._id}
+              className="text-gray-900"
+            />
           </div>
           <div className="flex justify-between">
             <span className="text-gray-500">Username</span>

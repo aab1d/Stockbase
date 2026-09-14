@@ -2,10 +2,13 @@ import { useState } from "react";
 import { loginUser } from "../api/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
+import Spinner from "../components/Spinner.jsx";
+import PasswordInput from "../components/PasswordInput.jsx";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -13,16 +16,20 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     try {
       const data = await loginUser(username, password);
       login(data.token, data.user);
-      navigate("/product/all");
+      navigate("/products");
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      {loading && <Spinner corner size="sm" />}
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 bg-white p-8 rounded-lg border border-gray-200 w-full max-w-sm"
@@ -50,7 +57,7 @@ const Login = () => {
           <label htmlFor="password" className="text-sm text-gray-700">
             Password
           </label>
-          <input
+          <PasswordInput
             id="password"
             type="password"
             className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"

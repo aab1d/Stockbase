@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getAllProducts, searchProducts } from "../api/product.js";
 import { useAuth } from "../context/useAuth.js";
 import RoleGuard from "../components/RoleGuard.jsx";
+import Spinner from "../components/Spinner.jsx";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -11,9 +12,12 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const { token } = useAuth();
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
+      setQuery("");
       try {
         const data = await getAllProducts(token);
         setProducts(data);
@@ -24,7 +28,7 @@ const ProductList = () => {
       }
     };
     fetchProducts();
-  }, [navigate, token]);
+  }, [token, location.key]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -41,9 +45,6 @@ const ProductList = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-10">
       <div className="max-w-3xl mx-auto flex flex-col gap-6">
@@ -54,6 +55,12 @@ const ProductList = () => {
               Browse and manage inventory
             </p>
           </div>
+          {loading && <Spinner corner size="sm" />}
+          {error && (
+            <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-md px-3 py-2">
+              {error}
+            </p>
+          )}
           <RoleGuard allowedRoles={["admin"]}>
             <button
               className="rounded-md bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700 transition-colors cursor-pointer"
@@ -79,7 +86,7 @@ const ProductList = () => {
           </button>
         </form>
         <div className="flex flex-col gap-3">
-          {products.length === 0 && (
+          {!loading && products.length === 0 && (
             <p className="text-sm text-gray-500 text-center py-8">
               No products found.
             </p>

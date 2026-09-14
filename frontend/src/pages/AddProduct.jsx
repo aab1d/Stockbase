@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addProduct } from "../api/product.js";
 import { useAuth } from "../context/useAuth.js";
+import Spinner from "../components/Spinner.jsx";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -43,6 +44,7 @@ const AddProduct = () => {
   };
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-10">
+      {loading && <Spinner corner size="sm" />}
       <form
         className="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg p-8 flex flex-col gap-4"
         onSubmit={handleSubmit}

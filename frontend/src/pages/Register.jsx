@@ -1,24 +1,31 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../api/auth";
+import Spinner from "../components/Spinner";
+import PasswordInput from "../components/PasswordInput";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     try {
       await registerUser(username, password);
       navigate("/login");
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      {loading && <Spinner corner size="sm" />}
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 bg-white p-8 rounded-lg border border-gray-200 w-full max-w-sm"
@@ -49,7 +56,7 @@ const Register = () => {
           <label htmlFor="password" className="text-sm text-gray-700">
             Password
           </label>
-          <input
+          <PasswordInput
             id="password"
             type="password"
             className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"

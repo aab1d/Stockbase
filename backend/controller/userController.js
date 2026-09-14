@@ -5,7 +5,7 @@ import User from "../models/User.js";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export const registerUser = async (req, res) => {
-  const { username, role, password } = req.body;
+  const { username, password } = req.body;
   try {
     const hashed = await bcrypt.hash(password, 10);
     await User.create({ username, role: "user", password: hashed });
