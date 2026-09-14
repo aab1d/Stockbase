@@ -37,13 +37,19 @@ export const searchProduct = async (req, res) => {
 
 export const addProduct = async (req, res) => {
   try {
-    const { name, price, description } = req.body;
+    const { name, category, price, amount, description } = req.body;
     const existingProduct = await Product.findOne({ name: name });
     if (existingProduct) {
-      return res.status(401).json({ message: "Product already exists!" });
+      return res.status(409).json({ message: "Product already exists!" });
     }
-    const prod = await Product.create({ name, price, description });
-    res.status(200).json({ message: "Product created" });
+    const prod = await Product.create({
+      name,
+      category,
+      price,
+      amount,
+      description,
+    });
+    res.status(200).json({ message: "Product created", data: prod });
     console.log(prod);
   } catch (err) {
     console.log(err);

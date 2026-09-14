@@ -1,6 +1,6 @@
 const validateUser = (req, res, next) => {
-  const { username, role, password } = req.body;
-  if (!username || !role || !password) {
+  const { username, password } = req.body;
+  if (!username || !password) {
     return res
       .status(400)
       .json({ message: "Fill complete details to register." });
